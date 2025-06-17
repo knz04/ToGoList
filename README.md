@@ -78,3 +78,7 @@ Use the `-h` or `-help` flag to display a list of all available commands and the
 
 ```bash
 ./togo -h
+```
+
+## Libraries
+https://github.com/olekukonko/tablewriter?tab=readme-ov-file

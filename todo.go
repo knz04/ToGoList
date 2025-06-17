@@ -26,7 +26,7 @@ func (t *Todos) Add(task string) {
 }
 
 func (t *Todos) Complete(index int) error {
-	var ls Todos := *t
+	var ls Todos = *t
 	if index <= 0 || index > len(ls) {
 		return errors.New("invalid index")
 	}
@@ -38,7 +38,7 @@ func (t *Todos) Complete(index int) error {
 }
 
 func (t *Todos) Delete(index int) error {	
-	var ls Todos := *t
+	var ls Todos = *t
 	if index <= 0 || index > len(ls) {
 		return errors.New("invalid index")
 	}

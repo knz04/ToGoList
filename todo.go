@@ -1,10 +1,11 @@
 package todo
 
-import {
+import (
+	"encoding/json"
 	"time"
 	"errors"
 	"os"
-}
+)
 
 type item struct{
 	Task string
@@ -54,21 +55,33 @@ func (t *Todos) Load(filename string) error {
 	var err error
 
 	file, err = os.ReadFile(filename)
-	if err =! nil {
+	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
-			return
+			return nil
 		}
 		return err
 	}
 
 	if len(file) == 0 {
-		return err
+		return nil
 	}
 	
-	err = json.Ummarshal(file, t)
-	if err =! nil {
+	err = json.Unmarshal(file, t)
+	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func (t *Todos) Store(filename string) error {
+	var data []byte
+	var err error
+
+	data, err = json.Marshal(t)
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(filename, data, 0644)
 }

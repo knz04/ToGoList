@@ -3,6 +3,7 @@ package todo
 import {
 	"time"
 	"errors"
+	"os"
 }
 
 type item struct{
@@ -15,7 +16,7 @@ type item struct{
 type Todos []item
 
 func (t *Todos) Add(task string) {
-	var todo item := item {
+	var todo item = item {
 		Task: task,
 		Done: false,
 		CreatedAt: time.Now(),
@@ -44,6 +45,30 @@ func (t *Todos) Delete(index int) error {
 	}
 
 	*t = append(ls[:index-1], ls[index:]...)
+
+	return nil
+}
+
+func (t *Todos) Load(filename string) error {
+	var file []byte
+	var err error
+
+	file, err = os.ReadFile(filename)
+	if err =! nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return
+		}
+		return err
+	}
+
+	if len(file) == 0 {
+		return err
+	}
+	
+	err = json.Ummarshal(file, t)
+	if err =! nil {
+		return err
+	}
 
 	return nil
 }

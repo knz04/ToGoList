@@ -8,6 +8,8 @@ import (
 	"time"
 
 	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/renderer"
+	"github.com/olekukonko/tablewriter/tw"
 )
 
 type item struct{
@@ -42,8 +44,8 @@ func (t *Todos) Complete(index int) error {
 	return nil
 }
 
-func (t *Todos) Delete(index int) error {	
-	var ls Todos = *t
+func (t *Todos) Delete(index int) error {
+	ls := *t
 	if index <= 0 || index > len(ls) {
 		return errors.New("invalid index")
 	}
@@ -90,7 +92,20 @@ func (t *Todos) Store(filename string) error {
 }
 
 func (t *Todos) Print() {
-	table := tablewriter.NewWriter(os.Stdout)
+	symbols := tw.NewSymbolCustom("Animal").
+		WithRow("~").
+		WithColumn("|").
+		WithTopLeft("🐾").
+		WithTopMid("🦴").
+		WithTopRight("🐾").
+		WithMidLeft("🐟").
+		WithCenter("🐱").
+		WithMidRight("🐟").
+		WithBottomLeft("🐾").
+		WithBottomMid("🦴").
+		WithBottomRight("🐾")
+
+	table := tablewriter.NewTable(os.Stdout, tablewriter.WithRenderer(renderer.NewBlueprint(tw.Rendition{Symbols: symbols})))
 	table.Header([]string{"No.", "Task", "Done", "Created At", "Completed At"})
 
 	for i, item := range *t {

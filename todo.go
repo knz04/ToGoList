@@ -15,7 +15,7 @@ type item struct{
 type Todos []item
 
 func (t *Todos) Add(task string) {
-	todo := item {
+	var todo item := item {
 		Task: task,
 		Done: false,
 		CreatedAt: time.Now(),
@@ -26,7 +26,7 @@ func (t *Todos) Add(task string) {
 }
 
 func (t *Todos) Complete(index int) error {
-	ls := *t
+	var ls Todos := *t
 	if index <= 0 || index > len(ls) {
 		return errors.New("invalid index")
 	}

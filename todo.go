@@ -2,10 +2,12 @@ package todo
 
 import (
 	"encoding/json"
-	"time"
 	"errors"
 	"os"
-	"fmt"
+	"strconv"
+	"time"
+
+	"github.com/olekukonko/tablewriter"
 )
 
 type item struct{
@@ -88,7 +90,30 @@ func (t *Todos) Store(filename string) error {
 }
 
 func (t *Todos) Print() {
+	table := tablewriter.NewWriter(os.Stdout)
+	table.Header([]string{"No.", "Task", "Done", "Created At", "Completed At"})
+
 	for i, item := range *t {
-		fmt.Printf("%d ~ %s\n", i+1, item.Task)
+		done := "❌"
+		if item.Done {
+			done = "✅"
+		}
+
+		completedAt := "Not yet completed"
+		if !item.CompletedAt.IsZero() {
+			completedAt = item.CompletedAt.Format(time.RFC3339)
+		}
+
+		row := []string{
+			strconv.Itoa(i + 1),
+			item.Task,
+			done,
+			item.CreatedAt.Format(time.RFC3339),
+			completedAt,
+		}
+
+		table.Append(row)
 	}
+
+	table.Render()
 }

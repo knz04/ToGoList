@@ -1,9 +1,6 @@
 # ToGoList 📝
 ToGoList is a CLI to do list application written in Go.
 
-## Reference
-https://www.youtube.com/watch?v=j1CXoOQXbco
-
 ## Features
 
 * **Add** new tasks to your list.
@@ -82,3 +79,6 @@ Use the `-h` or `-help` flag to display a list of all available commands and the
 
 ## Libraries
 https://github.com/olekukonko/tablewriter?tab=readme-ov-file
+
+## Reference
+https://www.youtube.com/watch?v=j1CXoOQXbco

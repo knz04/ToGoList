@@ -5,6 +5,7 @@ import (
 	"time"
 	"errors"
 	"os"
+	"fmt"
 )
 
 type item struct{
@@ -84,4 +85,10 @@ func (t *Todos) Store(filename string) error {
 	}
 
 	return os.WriteFile(filename, data, 0644)
+}
+
+func (t *Todos) Print() {
+	for i, item := range *t {
+		fmt.Printf("%d ~ %s\n", i+1, item.Task)
+	}
 }
